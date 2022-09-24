@@ -1,0 +1,87 @@
+<html>
+
+<head>
+  <title>Clock!</title>
+  <style type="text/css">
+    .clock {
+      width: 200px;
+      height: 200px;
+      background: #e8e8e8;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+    }
+
+    .clock:before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #000;
+      border-radius: 50%;
+    }
+
+    .s,
+    .m,
+    .h {
+      border-radius: 10%;
+    }
+
+    .s {
+      background: black;
+      width: 4px;
+      height: 80px;
+      /* transform: rotate(20deg); */
+    }
+
+    /* .score {
+      width: 300px;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .number {
+      font-size: 36px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    img {
+      margin-left: 10px;
+      width: 45px;
+      height: 40px;
+    } */
+  </style>
+</head>
+
+<body>
+  <!-- <div class='clock'>
+    <div class='s' id="s"></div>
+    <div class='m'></div>
+    <div class='h'></div>
+  </div> -->
+  <!-- <div class="score">
+    <span class="number">4.6</span>
+    <img src="./star_full.svg">
+  </div> -->
+  <script>
+    let s = document.getElementById('s')
+    let deg = 0
+    setInterval(() => {
+      s.style.transform = `rotate(${deg}deg)`
+      if (deg === 354) {
+        deg = 0
+      }
+      else {
+        deg += 6
+      }
+    }, 1000)
+
+  </script>
+</body>
+
+</html>

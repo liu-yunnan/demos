@@ -6,11 +6,117 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>js手写</title>
-  <script src="./js手写.js"></script>
+  <!-- <script src="./代码输出.js"></script> -->
+  <!-- <script src="./深浅拷贝.js"></script> -->
+  <!-- <script src="./面试.js"></script> -->
+  <!-- <script src="./js手写.js"></script> -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* .main {
+      width: 100%;
+      height: 50vh;
+      background: #999;
+      display: flex;
+      justify-content: space-between;
+      justify-content: center;
+      display: flex;
+    } */
+
+    /* .right {
+      position: absolute;
+      right: 0;
+    } */
+    /* .withe {
+      width: 30px;
+      max-width: 30px;
+      min-width: 5px;
+      height: 100px;
+      background: #333;
+      flex-shrink: 1;
+    }
+
+    .left,
+    .center,
+    .right {
+      width: 100px;
+      height: 100px;
+      background: red;
+      flex-shrink: 0;
+    } */
+
+    .sx {
+      border: 100px solid transparent;
+      width: 0;
+      height: 0;
+      border-radius: 100px;
+      border-top-color: red;
+      /* border-top-left-radius: 100%; */
+    }
+
+    .header,
+    .footer {
+      width: 100%;
+      height: 100px;
+    }
+
+    .footer {
+      clear: both;
+    }
+
+    .middle {
+      width: 100%;
+      height: 2000px;
+      float: left;
+    }
+
+    .left,
+    .right {
+      width: 100px;
+      height: 100px;
+      float: left;
+    }
+
+    .left {
+      margin-left: -100%;
+    }
+
+    .right {
+      margin-left: -100px;
+    }
+
+    .main #main-wrapper {
+      padding-left: 100px;
+      padding-right: 100px;
+      background: #666;
+    }
+
+    /* .content {
+      overflow: hidden;
+    }
+
+    .wrapper {
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+
+    .left {
+      position: relative;
+      margin-left: -100%;
+      left: -100px;
+    }
+    .right {
+      margin-right: -100px;
+    }  */
+  </style>
 </head>
 
 <body>
-  <div>1</div>
+  <!-- <input type="text" value="value" /> -->
+  <!-- <div>1</div>
   <div>2</div>
   <div>3</div>
   <div>4</div>
@@ -19,7 +125,30 @@
   <div>7</div>
   <div>8</div>
   <div>9</div>
-  <div>10</div>
+  <div>10</div> -->
+  <!-- <div class="main">
+    <div class="left">A</div>
+    <div class="withe"></div>
+    <div class="center">B</div>
+    <div class="withe"></div>
+    <div class="right">C</div>
+  </div>
+  <div class="sx"></div> -->
+  <!-- <div class="header" style="background:#999">header</div>
+  <div class="content wrapper">
+    <div class="middle" style="background:#ccc">middle</div>
+    <div class="left" style="background:#f00">left</div>
+    <div class="right" style="background:rgb(226, 196, 196)">right</div>
+  </div>
+  <div class="footer" style="background:#999">footer</div> -->
+
+  <!-- <div class="header" style="background:#999">header</div>
+  <div class="main middle" style="background:#ccc">
+    <div id="main-wrapper">middle</div>
+  </div>
+  <div class="left" style="background:#f00">left</div>
+  <div class="right" style="background:rgb(226, 196, 196)">right</div>
+  <div class="footer" style="background:#999">footer</div> -->
 </body>
 
 </html>

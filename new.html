@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>new</title>
+</head>
+
+<body>
+  <script>
+    // 定义构造函数
+    function Person (name, age) {
+      this.name = name
+      this.age = age
+      // 返回对象后，使用new 不会获取到say方法，返回非对象则不会影响
+      // return {
+      //   name: this.name,
+      //   age: this.age
+      // }
+      return 1
+    }
+    // new一个对象
+    let obj = new Person('DoKi', 18)
+    console.log('使用new', obj)
+    function myNew (fn, ...args) {
+      if (typeof fn !== 'function') {
+        throw TypeError('非构造函数！')
+      }
+      // const obj = {}
+      // // console.log(constuctor, ...args)
+      // obj._proto_ = fn.prototype
+      // const ret = fn.apply(obj, args)
+      // // console.log(ret)
+      // // 返回对象则输出ret，不是对象则返回obj
+      // return typeof ret === 'object' ? ret : obj
+
+      const instance = Object.create(fn.prototype)
+      // 创建了一个fn的实例instance
+      // 传参
+      const res = fn.apply(instance, args)
+      if (typeof res === 'function' || typeof res === 'object') {
+        return res
+      }
+      return instance
+    }
+    let newObj = myNew(Person, 'DoKiDoKi', 18)
+    console.log('使用mynew', newObj);
+  </script>
+</body>
+
+</html>
