@@ -59,6 +59,7 @@
 // window.onscroll = throttle(function fn () {
 //   console.log('object')
 // })
+
 // // 节流
 // function throttle (fn, time = 1000) {
 //   let timer = null

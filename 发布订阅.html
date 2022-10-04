@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class PublishMessage {
+      constructor() {
+        this.list = []
+      }
+      subscribe (name, fn) {
+        this.list.push({
+          'name': name,
+          'fn': fn
+        })
+      }
+      unSubscribe (name, fn) {
+        for (let i = 0; i < this.list.length; i++) {
+          if (this.list[i].name === name && this.list[i].fn === fn) {
+            this.list.splice(i, 1)
+          }
+        }
+      }
+      publish (name) {
+        for (let i = 0; i < this.list.length; i++) {
+          if (this.list[i].name === name) {
+            this.list[i].fn()
+          }
+        }
+      }
+    }
+    const handlerA = function () {
+      console.log('handlerA')
+      obj.unSubscribe('/test', handlerB)
+    }
+    const handlerB = function () {
+      console.log('handlerB')
+    }
+    const handlerC = function () {
+      console.log('handlerC')
+    }
+
+    let obj = new PublishMessage()
+    debugger
+    obj.subscribe('/test', handlerA)
+    obj.subscribe('/test', handlerB)
+    obj.subscribe('/test', handlerC)
+    obj.publish('/test')
+    console.log(obj.list);
+  </script>
+</body>
+
+</html>

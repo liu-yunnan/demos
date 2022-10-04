@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function getScore (s) {
+      let res = 0
+      let len = s.length
+      let set = new Set(s.split(''))
+      if (set.size === 1) {
+        res += 2
+      } else if (set.size === 2 || len === 3) {
+        res += 1
+      }
+      return res
+    }
+    function fn (input) {
+      let arr = new Array(input.length + 1).fill(0)
+      arr[2] = getScore(input.slice(0, 2))
+      for (let i = 2; i < input.length; i++) {
+        let r3 = getScore(input.slice(i - 2, i + 1))
+        let r2 = getScore(input.slice(i - 1, i + 1))
+        arr[i + 1] = Math.max(r3 + arr[i - 2], r2 + arr[i - 1])
+      }
+
+      return arr[input.length]
+    }
+    console.log(fn('123444577'))
+  </script>
+</body>
+
+</html>

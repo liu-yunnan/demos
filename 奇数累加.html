@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // var b = 3;
+    // (function () {
+    //   // debugger
+    //   b = 5
+    //   var b = 2
+    // })()
+    // console.log(b)
+    /**
+     * 
+    */
+    const arr = [1, 2, 3, 4];
+    // (async () => {
+    //   arr.forEach(async ele => {
+    //     const result = await new Promise(resolve =>
+    //       setTimeout(() => {
+    //         resolve(ele)
+    //       }, (10 - ele) * 1000))
+    //     console.log(result)
+    //   })
+    // })()
+    // 6s后4之后间隔1s分别输出3 2 1
+
+    (async () => {
+      for (let i = 0; i < arr.length; i++) {
+        const result = await new Promise(res => setTimeout(() => { res(arr[i]) }, (10 - arr[i]) * 1000))
+        console.log(result)
+      }
+    })()
+    // 9s后输出1 9+8s后输出2 9+8+7后输出3 9+8+7+6后输出4
+    /**
+     * 求1+2+3+…+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+    */
+    // function fn (n) {
+    //   let arr = new Array(Math.ceil(n / 2)).fill(1)
+    //   console.log(arr)
+    //   let newArr = arr.map((item, index) => item + index * 2)
+    //   console.log(newArr)
+    //   let res = newArr.reduce((pre, cur) => { return pre = pre + cur }, 0)
+    //   console.log(res)
+    //   return res
+    // }
+    // fn(7)
+
+    // 四种密码安全等级判断
+    // var getPwdRank = function (psd) {
+    //   let typeArr = [0, 0, 0, 0]
+    //   if (psd.length < 8) {
+    //     return 0
+    //   }
+    //   for (let i = 0; i < psd.length; i++) {
+    //     let curr = psd[i].charCodeAt()
+    //     if (curr >= 48 && curr <= 57) { //数字
+    //       typeArr[0] = 1
+    //     } else if (curr >= 97 && curr <= 122) { //小写
+    //       typeArr[1] = 1
+    //     } else if (curr >= 65 && curr <= 90) { //大写
+    //       typeArr[2] = 1
+    //     } else { //其他字符
+    //       typeArr[3] = 1
+    //     }
+    //   }
+
+    //   let typeTotal = typeArr.reduce((pre, item) => { return pre = pre + item }, 0)
+
+    //   if (typeTotal >= 3) {
+    //     return 3
+    //   } else if (typeArr[0] === 1 && typeArr[1] === 1 || typeArr[0] === 1 && typeArr[2] === 1) {// level 1
+    //     return 1
+    //   } else {
+    //     return 2
+    //   }
+    // }
+
+    // console.log(getPwdRank('hello'))
+    // console.log(getPwdRank('hello111'))
+    // console.log(getPwdRank('helloAaa'))
+    // console.log(getPwdRank('hello++['))
+    // console.log(getPwdRank('hello1++aa'))
+  </script>
+</body>
+
+</html>
