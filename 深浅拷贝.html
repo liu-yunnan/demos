@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let objP = {
+      a: new Date(),
+      b: {
+        c: 2,
+        d: null,
+      },
+      d: [1, 2, 34, 5],
+      e: function fn () { },
+      f: new RegExp('/d'),
+    }
+    // 循环引用
+    var a = {
+      a: new Date(),
+      d: [1, 2, 34, 5],
+      j: {},
+      e: function fn () { },
+      f: new RegExp('/d'),
+    }
+    var b = {}
+    a['b'] = b
+    b['a'] = a
+
+    /** 浅拷贝
+     *  Object.assign()
+     * */
+    let clone = Object.assign(objP)
+    console.log('浅拷贝', objP === clone)
+    /**
+     * 深拷贝方式：
+     * 1.JSON.parse(JSON.stringify(obj)) 
+     *  缺点：
+     *    不能解决循环引用问题（会报错）
+     *    会忽略undefined
+     *    不能序列化函数
+     * 2.循环深拷贝
+     *   缺点：
+     *      循环引用会报错
+     * 3.循环+weakMap，解决循环引用
+     * 4.使用MessageChannel
+     *   缺点：
+     *     拷贝函数对象会报错
+     */
+    // 手写深拷贝
+    function deepClone (obj) {
+      if (typeof obj !== "object" && obj === "null") return obj
+      if (obj instanceof Date) return new Date(obj)
+      if (obj instanceof RegExp) return new RegExp(obj)
+      let newObj = Array.isArray(obj) ? [] : {}
+      for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          newObj[key] = typeof obj[key] === "object" ? deepClone(obj[key]) : obj[key]
+        }
+      }
+      return newObj
+    }
+    let cloneObj = deepClone(objP)
+    console.log('深拷贝', cloneObj === objP)
+    try {
+      let cloneObj1 = deepClone(a)
+    } catch (error) {
+      console.log('深拷贝（循环引用）报错 Uncaught InternalError: too much recursion')
+    }
+    function deepClonePlus (obj, map = new WeakMap()) {
+      if (typeof obj !== "object" && obj === "null") return obj
+      if (obj instanceof Date) return new Date(obj)
+      if (obj instanceof RegExp) return new RegExp(obj)
+      if (map.has(obj)) return map.get(obj)
+      let newObj = Array.isArray(obj) ? [] : {}
+      // debugger
+      map.set(obj, newObj)
+      // console.log(map)
+      for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          newObj[key] = typeof obj[key] === 'object' && obj[key] !== 'null' ? deepClonePlus(obj[key], map) : obj[key]
+        }
+      }
+      return newObj
+    }
+    let cloneObj2 = deepClonePlus(a)
+    console.log('深拷贝plus', cloneObj2 === a)
+  </script>
+</body>
+
+</html>
