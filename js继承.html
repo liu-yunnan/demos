@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+     *  原型链继承
+     *  缺点：
+     *    1. 引用类型的属性被所有实例共享
+     *    2. 在创建child实例时，不能向Parent传参(没有办法在不影响所有实例的情况下，向父类构造函数传参)
+     */
+    function Parent () {
+      this.names = ['kevin', 'daisy']
+    }
+    function Child () {
+    }
+    Parent.prototype.getName = function () {
+      console.log(this.names)
+    }
+    Child.prototype = new Parent()
+    let parent = new Parent()
+    let child1 = new Child()
+    let child2 = new Child()
+    console.log('child使用parent的getName方法：')
+    child1.getName()
+    // 引用类型的属性会被所有实例共享
+    child1.names.push('DoKi')
+    console.log('child1修改names：', child1.names) // [ "kevin", "daisy", "DoKi" ]
+    console.log('child2：', child2.names) // [ "kevin", "daisy", "DoKi" ]
+
+    child2.names = ['DoKi']
+    console.log('单独修改child2的names属性后：', child2.names) // [ "DoKi" ]
+    console.log('child1不变：', child1.names) // [ "kevin", "daisy", "DoKi" ]
+    // console.log('parent不变：', parent.names)
+    /**
+     * 借用构造函数（经典继承）
+     * 缺点： 
+     */
+  </script>
+</body>
+
+</html>
