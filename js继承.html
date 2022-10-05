@@ -13,36 +13,204 @@
     /**
      *  原型链继承
      *  缺点：
-     *    1. 引用类型的属性被所有实例共享
-     *    2. 在创建child实例时，不能向Parent传参(没有办法在不影响所有实例的情况下，向父类构造函数传参)
+     *      1. 引用类型的属性被所有实例共享
+     *      2. 在创建child实例时，不能向Parent传参(没有办法在不影响所有实例的情况下，向父类构造函数传参)
      */
-    function Parent () {
-      this.names = ['kevin', 'daisy']
-    }
-    function Child () {
-    }
-    Parent.prototype.getName = function () {
-      console.log(this.names)
-    }
-    Child.prototype = new Parent()
-    let parent = new Parent()
-    let child1 = new Child()
-    let child2 = new Child()
-    console.log('child使用parent的getName方法：')
-    child1.getName()
-    // 引用类型的属性会被所有实例共享
-    child1.names.push('DoKi')
-    console.log('child1修改names：', child1.names) // [ "kevin", "daisy", "DoKi" ]
-    console.log('child2：', child2.names) // [ "kevin", "daisy", "DoKi" ]
+    // function Parent () {
+    //   this.names = ['kevin', 'daisy']
+    // }
+    // function Child () {
+    // }
+    // Parent.prototype.getName = function () {
+    //   console.log(this.names)
+    // }
+    // Child.prototype = new Parent()
+    // let parent = new Parent()
+    // let child1 = new Child()
+    // let child2 = new Child()
+    // console.log('child使用parent的getName方法：')
+    // child1.getName()
+    // // 引用类型的属性会被所有实例共享
+    // child1.names.push('DoKi')
+    // console.log('child1修改names：', child1.names) // [ "kevin", "daisy", "DoKi" ]
+    // console.log('child2：', child2.names) // [ "kevin", "daisy", "DoKi" ]
 
-    child2.names = ['DoKi']
-    console.log('单独修改child2的names属性后：', child2.names) // [ "DoKi" ]
-    console.log('child1不变：', child1.names) // [ "kevin", "daisy", "DoKi" ]
-    // console.log('parent不变：', parent.names)
+    // child2.names = ['DoKi']
+    // console.log('单独修改child2的names属性后：', child2.names) // [ "DoKi" ]
+    // console.log('child1不变：', child1.names) // [ "kevin", "daisy", "DoKi" ]
+
     /**
      * 借用构造函数（经典继承）
-     * 缺点： 
+     * 优点：
+     *    1.避免了引用类型属性被所有实例共享
+     *    2.可以在child中向parent传参
+     * 缺点：
+     *    方法在构造函数中定义，每次创建实例，方法都会被重新创建一次
      */
+    // function Parent (name) {
+    //   this.name = name
+    //   this.list = [1, 2, 3, 4]
+    // }
+    // function Child (name) {
+    //   // 子可向父传参
+    //   Parent.call(this, name)
+    // }
+    // let child1 = new Child('DoKi')
+    // let child2 = new Child('Daisy')
+    // let parent = new Parent('Kelven')
+    // child1.list.push(5)
+    // child2.list.push(6)
+    // parent.list.push(0)
+    // // 引用类型属性不会被共享
+    // console.log('child1的name、list：', child1.name, child1.list)
+    // console.log('child2的name、list：', child2.name, child2.list)
+    // console.log('parent的name、list：', parent.name, parent.list);
+
+    /**
+     *  组合继承：原型链继承+构造函数继承（经典继承）
+     *  优点：融合原型链继承和构造函数继承的特点，是js中最常用的继承方式
+     */
+    // function Parent (name) {
+    //   this.name = name
+    //   this.list = ['red', 'blue', 'green']
+    // }
+    // Parent.prototype.getName = function () {
+    //   return this.name
+    // }
+    // function Child (name, age) {
+    //   Parent.call(this, name)
+    //   this.age = age
+    // }
+    // Child.prototype = new Parent()
+    // Child.prototype.constructor = Child
+    // // console.log(Child.prototype, Child.prototype.constructor)
+    // let child1 = new Child('DoKi', 18)
+    // let child2 = new Child('Kelven', 18)
+    // let parent = new Parent('Dyksn')
+    // child1.list.push('black')
+    // console.log('child1:', child1.getName(), child1.age, child1.list)
+    // console.log('child2:', child2.getName(), child2.age, child2.list)
+    // console.log('parent:', parent.getName(), parent.list);
+
+    /**
+     * 原型式继承
+     *  就是 ES5 Object.create 的模拟实现，将传入的对象作为创建的对象的原型
+     *  缺点：
+     *     包含引用类型的属性值始终都会共享相应的值，这点跟原型链继承一样
+     */
+    // function creatObj (o) {
+    //   function F () { }
+    //   F.prototype = o
+    //   return new F()
+    // }
+    // let person = {
+    //   name: 'kevin',
+    //   friends: ['daisy', 'kelly']
+    // }
+    // let person1 = creatObj(person)
+    // let person2 = creatObj(person)
+    // person1.friends.push('DoKi')
+    // console.log('（引用类型属性共享）parson1修改friends后parson2的friends：', person2.friends) // ["daisy", "kelly", "DoKi"]
+
+    /**
+     * 寄生式继承
+     *    创建一个用于封装继承过程的函数，该函数在内部以某种形式来做增强对象，最后返回对象
+     * 缺点：
+     *    每次创建对象都会创建一遍方法
+    */
+    // function createObj (o) {
+    //   let clone = Object.create(o)
+    //   clone.sayName = function () {
+    //     console.log('hi')
+    //   }
+    //   return clone
+    // }
+    // let person = {
+    //   name: 'kevin',
+    //   friends: ['daisy', 'kelly']
+    // }
+    // let person1 = createObj(person)
+    // let person2 = createObj(person)
+    // person1.sayName()
+    // person2.sayName()
+
+    /**
+     * 寄生组合式继承
+     *    创建一个用于封装继承过程的函数，该函数在内部以某种形式来做增强对象，最后返回对象
+     *    只调用了一次parent构造函数，并且避免了在parent.prototype上面创建不必要的、多余的属性。与此同时还能保持原型链不变。
+     * 缺点：
+     *    组合继承最大的缺点是会调用两次父构造函数。
+     *      一次是设置子类型实例的原型的时候
+     *      一次在创建子类型实例的时候
+    */
+    // function object (o) {
+    //   function F () { }
+    //   F.prototype = o
+    //   return new F()
+    // }
+    // function prototype (child, parent) {
+    //   console.log(parent.prototype)
+    //   let prototype = object(parent.prototype)
+    //   prototype.constructor = child
+    //   child.prototype = prototype
+    // }
+    // // 使用
+    // function Parent (name) {
+    //   this.name = name
+    //   this.list = ['red', 'blue', 'green']
+    // }
+    // Parent.prototype.getName = function () {
+    //   return this.name
+    // }
+    // function Child (name, age) {
+    //   Parent.call(this, name)
+    //   this.age = age
+    // }
+    // prototype(Child, Parent)
+    // console.log(Child.prototype)
+    // console.log(Child.prototype instanceof Parent)//true
+
+    /**
+     * 类继承
+    */
+    class Point {
+      constructor(x, y) {
+        this.x = x
+        this.y = y
+      }
+
+      toString () {
+        return `(${this.x},${this.y})`
+      }
+    }
+    var p = new Point(2, 3)
+    p.toString()//(2,3)
+
+    p.hasOwnProperty('x') //true
+    p.hasOwnProperty('y') //true
+    p.hasOwnProperty('toString') //false
+
+    p.__proto__.hasOwnProperty('toString') //true
+
+    class ColorPoint extends Point {
+      constructor(x, y, color) {
+        supper(x, y)//调用父类的constructor方法并传入x和y
+        this.color = color //ColorPoint新增属性color
+      }
+
+      toString () {
+        return this.color + ' ' + super.toString()//调用父类toString()
+      }
+    }
+    /**
+     * 子类必须在constructor方法中调用super方法，否则新建实例时会报错。
+     *     这是因为子类没有自己的this对象，而是继承父类的this对象，然后对其进行加工，
+     *     如果不调用super方法，子类就得不到this对象。
+     * 如果子类没有显示添加constructor方法，则这个方法会被默认添加。
+     *    也就是说不管有没有显示定义，任何一个子类都有constructor方法
+     * 在子类的构造函数中，只有调用super之后，才可以使用this关键字，否则会报错，
+     *    这是因为子类实例的构建，是基于对父类实例的加工，只有super方法才能返回父类实例。
+    */
   </script>
 </body>
 
