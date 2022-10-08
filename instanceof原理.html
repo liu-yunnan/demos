@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 数据类型判断
+    function typeOf (obj) {
+      //        [object object]     [object Array]  '[object', 'Array]'
+      // let res = Object.prototype.toString.call(obj).split(' ')[1]
+      // res = res.substring(0, res.length - 1).toLowerCase()
+      //                            [object Array]  Array
+      let res = Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
+      console.log(res)
+
+    }
+    // 测试用例
+    typeOf([])        // 'array'
+    typeOf({})        // 'object'
+    typeOf(new Date)  // 'date'
+
+    // instanceof
+    // function myinstanceof (left, right) {
+    //   if (left === null || typeof left !== "object") return false
+    //   // left是否属于某个类（right），也就是他的私有属性是否指向某个类的原型
+    //   let prototype = right.prototype
+    //   let proto = Object.getProtoytpe(left)
+    //   while (left) {
+    //     if (proto === prototype) {
+    //       return true
+    //     }
+    //     left = Object.getProtoytpe(proto)
+    //   }
+    // }
+
+    function myinstanceof (left, right) {
+      // instanceof 用于检测引用类型，非引用直接过滤
+      if (typeof left !== "object" || left === null) {
+        return false
+      }
+      // 获取右的原型
+      let prototype = right.prototype
+      // 获取左的原型对象
+      let proto = Object.getPrototypeOf(left)
+      while (proto) {
+        if (proto === prototype) {
+          return true
+        }
+        // 原型的原型，查找原型链，直到为null
+        proto = Object.getPrototypeOf(proto)
+      }
+      return false
+    }
+    console.log(myinstanceof([], Array))
+    console.log(myinstanceof([], Object))
+    console.log(myinstanceof(new Date(), Date))
+    console.log(myinstanceof(Number(10), Object))
+    console.log(myinstanceof({}, Array)); 
+  </script>
+</body>
+
+</html>
