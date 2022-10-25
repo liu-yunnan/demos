@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="btn">点击抢购</button><br>
+  <input id="input" placeholder="输入搜索内容" />
+  <script>
+    // 节流 每隔一段时间执行一次
+    // 使用场景:
+    // 抢购疯狂点滴
+    // DOM拖拽事件
+    // 页面滚动
+    // 窗口调整
+
+    function throttle (fn, time = 1000) {
+      let timer = null
+      return function (...args) {
+        if (timer === null) {
+          fn.apply(this, args)
+          timer = setTimeout(() => {
+            timer = null
+            // console.log(timer)
+          }, time)
+        }
+      }
+    }
+    function purchase () {
+      console.log('抢购！')
+    }
+    document.getElementById('btn').onclick = throttle(purchase, 1000)
+
+    // 防抖 多次事件一次响应 在事件被触发n秒后再执行函数,如果在这n秒内又被触发，则重新计时
+    // 输入框实时搜索
+    function dehounce (fn, time = 1000) {
+      let timer = null
+      return function (...args) {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          fn.apply(this, args)
+        }, time)
+      }
+    }
+    function select (e) {
+      console.log(e.target.value)
+    }
+    document.getElementById('input').oninput = dehounce(select, 500)
+  </script>
+</body>
+
+</html>

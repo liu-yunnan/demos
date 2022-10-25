@@ -23,16 +23,16 @@
       border-radius: 50%;
     }
 
-    .s,
-    .m,
-    .h {
-      border-radius: 10%;
+    .s_box {
+      /* border: #000 solid 1px; */
     }
 
     .s {
-      background: black;
+      border-radius: 10%;
+      background: linear-gradient(black 0 50%, rgba(255, 255, 255, 0) 50% 100%);
       width: 4px;
-      height: 80px;
+      height: 150px;
+
       /* transform: rotate(20deg); */
     }
 
@@ -59,15 +59,13 @@
 </head>
 
 <body>
-  <!-- <div class='clock'>
-    <div class='s' id="s"></div>
+  <div class='clock'>
+    <div class="s_box">
+      <div class='s' id="s"></div>
+    </div>
     <div class='m'></div>
     <div class='h'></div>
-  </div> -->
-  <!-- <div class="score">
-    <span class="number">4.6</span>
-    <img src="./star_full.svg">
-  </div> -->
+  </div>
   <script>
     let s = document.getElementById('s')
     let deg = 0

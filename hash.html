@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: visible
+    }
+
+    .contain {
+      width: 100%;
+      height: 800px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#1" class="href">锚点1</a>
+  <div class="contain">这是内容</div>
+  <a href="#2" class="href">锚点2</a>
+  <div class="contain">这是内容</div>
+  <a href="#3" class="href">锚点3</a>
+  <div class="contain">这是内容</div>
+  <a href="#4" class="href">锚点4</a>
+  <div class="contain">这是内容</div>
+  <a href="#5" class="href">锚点5</a>
+  <div class="contain">这是内容</div>
+  <script>
+    let aList = document.getElementsByClassName('href')
+    let h = window.innerHeight
+    window.addEventListener('scroll', fn)
+    function fn () {
+      console.log("=============start==================")
+      for (let i = 0; i < aList.length; i++) {
+        if (aList[i].getBoundingClientRect().top < h) {
+          console.log('当前区域' + aList[i].innerText + ':' + aList[i].getBoundingClientRect().top)
+        }
+      }
+      console.log("=============end==================")
+    }
+  </script>
+</body>
+
+</html>

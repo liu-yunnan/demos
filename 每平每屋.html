@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function rotateMatrix (matrix, N, index) {
+      // 这里写函数实现
+      let arr = new Array(N).fill().map(item => item = new Array(N))
+      for (let i = 0; i < N; i++) {
+        for (let j = 0; j < N; j++) {
+          arr[i][j] = matrix[i * N + j]
+          // console.log(matrix[i*N+j])
+        }
+      }
+      let temp = arr[index][index]
+      for (let i = index; i <= N - 2 * index; i++) {
+        for (let j = index; j <= N - 2 * index; j++) {
+          arr[i + 1][j] = arr[i][j]
+        }
+        for (let j = index; j <= N - 2 * index; j++) {
+          arr[i + 1][j] = arr[i][j]
+        }
+      }
+      return arr
+    }
+
+    console.log(rotateMatrix([1, 2, 3, 4, 5, 6, 7, 8, 9], 3, 0))
+
+    function mergeRange (ranges) {
+      // 这里实现代码
+      // 对区间升序
+      ranges = ranges.sort((a, b) => a[0] - b[0])
+      let res = [ranges[0]]
+      for (let i = 1; i < ranges.length; i++) {
+        //     [5,10] [10,11] ==> [5,11]
+        if (ranges[i][0] <= res[res.length - 1][1] && ranges[i][1] > res[res.length - 1][1]) {
+          //      边界取最大
+          res[res.length - 1][1] = ranges[i][1]
+        } else if (ranges[i][0] > res[res.length - 1][1]) {
+          //       [5,10] [11,15]
+          res.push(ranges[i])
+        }
+      }
+      return res
+    }
+    console.log(mergeRange([[5, 10], [15, 20], [25, 30], [8, 15]]))
+
+
+
+
+
+    function format (origin) {
+      let res = createChildren({}, origin, 0)
+      // console.log(res)
+      return res
+    }
+    function createChildren (obj, origin, id) {
+      let children = origin.filter(item => item.parentId === id)
+      // console.log('children',children)
+      obj.children = children
+      obj.children = obj.children.map(item => {
+        item = createChildren(item, origin, item.id)
+        return item
+      })
+      // console.log('obj',obj)
+      return obj
+    }
+    let origin = [
+      { id: 1, name: 'grounp1', parentId: 0 },
+      { id: 2, name: 'grounp2', parentId: 1 },
+      { id: 3, name: 'grounp3', parentId: 1 },
+      { id: 4, name: 'grounp4', parentId: 2 },
+      { id: 5, name: 'grounp5', parentId: 4 },
+    ]
+    console.log(format(origin))
+
+  </script>
+</body>
+
+</html>
